@@ -133,7 +133,13 @@ vm = new Vue({
       },
       printable: function(val, oldVal) {
         if(val === true) {
+
+          $(".print-mode #recipe-totals").css(
+            'font-size', this.printableFontSize + "px"
+          );
+
           $("body").addClass('print-mode');
+
         } else {
           $("body").removeClass('print-mode');
         }
