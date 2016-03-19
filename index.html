@@ -315,13 +315,13 @@
               <label for="readable">Readable / Printable</label>
             </p>
           </div>
-          <div v-show="printable2" class="col s6 m3">
+          <div v-show="printable" class="col s6 m3">
             <div class="input-field">
               <input v-model="printableFontSize" type="number" id="printableFontSize" min="5" max="30" disabled number>
               <label for="printableFontSize">Font Size</label>
             </div>
           </div>
-          <div v-show="printable2" class="col s6 m3">
+          <div v-show="printable" class="col s6 m3">
             <a class="btn-floating btn-small waves-effect waves-light valign" @click="fontSizeChange('down')">
               <i class="material-icons">remove</i>
             </a>

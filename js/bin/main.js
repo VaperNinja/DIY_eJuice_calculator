@@ -130,6 +130,13 @@ vm = new Vue({
       },
       printableFontSize: function (val, oldVal) {
         $(".print-mode #recipe-totals").css('font-size', val + "px");
+      },
+      printable: function(val, oldVal) {
+        if(val === true) {
+          $("body").addClass('print-mode');
+        } else {
+          $("body").removeClass('print-mode');
+        }
       }
     },
 
@@ -220,7 +227,7 @@ vm = new Vue({
 
       fontSizeChange: function(direction) {
         if(direction == "up") {
-          if(this.printableFontSize > 24) return;
+          if(this.printableFontSize > 26) return;
           this.printableFontSize += 1;
         } else {
           if(this.printableFontSize < 8) return;
