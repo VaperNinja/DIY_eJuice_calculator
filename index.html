@@ -233,13 +233,13 @@
             </div>
             <div class="col s12 m4">
               <div class="input-field">
-                <input v-model="nicVG" id="nicBaseVg" @change="changeNicRatio('VG')" type="number" min="0" class="validate" number>
+                <input v-model="nicVG" id="nicBaseVg" @change="changeNicRatio('VG')" type="number" min="0" max="100" class="validate" number>
                 <label for="nicBaseVg">VG ratio %</label>
               </div>
             </div>
             <div class="col s12 m4">
               <div class="input-field">
-                <input v-model="nicPG" id="nicBasePg" @change="changeNicRatio('PG')" type="number" min="0" class="validate" number>
+                <input v-model="nicPG" id="nicBasePg" @change="changeNicRatio('PG')" type="number" min="0" max="100" class="validate" number>
                 <label for="nicBasePg">PG ratio %</label>
               </div>
             </div>
