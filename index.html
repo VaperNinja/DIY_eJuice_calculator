@@ -339,7 +339,7 @@
             <div class="row ingredient-header-line">
               <div class="col s3"><p class="ing-heading">Bottle Size:<br /> {{targetBottleSize}}&nbsp;ML</p></div>
               <div class="col s3"><p class="ing-heading">VG/PG Ratio:<br /> {{targetRatioVg}}/{{targetRatioPg}}</p></div>
-              <div class="col s6"><p class="ing-heading">Target Nicotine:<br /> {{targetNicMg}}&nbsp;MG - ({{nicVG}}/{{nicPG}} {{nicBaseMg}}MG Base)</p></div>
+              <div class="col s6"><p class="ing-heading">Target Nicotine:<br /> {{targetNicMg}}&nbsp;MG - <br class="hide-on-med-and-up" /> ({{nicVG}}/{{nicPG}} {{nicBaseMg}}MG Base)</p></div>
            </div>
          </li>
 
@@ -409,7 +409,7 @@
                <!-- <div class="col s3 grams">{{ ml_to_mg( percent_to_ml(flavor.percentage), flavor.weight_src, flavor.custom_weight ) }}</div> -->
                <div class="col s3 grams">
                  {{ flavor.percentage | percent_to_ml | ml_to_grams flavor.weight_src flavor.custom_weight | roundl }}
-                 <i class="material-icons closed right">settings</i>
+                 <i class="material-icons closed right hide-on-small-only">settings</i>
                  <i class="material-icons open right">visibility</i>
                </div>
              </div>
