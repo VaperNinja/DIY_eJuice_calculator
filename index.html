@@ -311,8 +311,15 @@
         <div class="readable no-print row">
           <div class="col s12 m6">
             <p>
-              <input v-model="printable" type="checkbox" id="readable" />
-              <label for="readable">Readable / Printable</label>
+              Readable / Printable
+              <div class="switch">
+               <label>
+                 Off
+                 <input v-model="printable" type="checkbox">
+                 <span class="lever"></span>
+                 On
+               </label>
+             </div>
             </p>
           </div>
           <div v-show="printable" class="col s6 m3">
