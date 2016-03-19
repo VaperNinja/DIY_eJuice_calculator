@@ -7,7 +7,7 @@
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"  media="all"/>
 
     <!--Let browser know website is optimized for mobilsave pre-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,27 +18,29 @@
   <body>
 
     <div class="container" id="wrapper">
-      <h1>Vaper.ninja DIY Calculator</h1>
-      <p class="subHeading">
-        <strong>A DIY E-Liquid calculator that includes weight (in grams), and doesn't omit any details in its calculations.</strong><br />
-        I found other calculators to be either inaccurate, less than user-friendly, clunky, hard to understand,
-        lacking weight or weight configurations, only ran on a specific platform that I don't use, or many of the above.
-        So I built an e-juice calculator that tries to be everything that the others aren't and above all, highly accurate.
-        <br />
-        <a class="modal-trigger" href="#license">
-          License: MIT<br >
-          By using this app you are accepting the license agreement.
-        </a>
-      </p>
-      <div class="row about-donate">
-        <a class="col s12 m5 waves-effect waves-light blue lighten-2 btn modal-trigger" data-target="about">About</a>
-        <div class="col s12 m2"></div>
-        <a class="col s12 m5 waves-effect waves-light blue lighten-2 btn modal-trigger right" data-target="donate">Donate / Contact</a>
-      </div>
-      <!-- Settings Trigger -->
-      <div class="row">
-          <a class="col s12 m5 waves-effect waves-light btn modal-trigger" data-target="baseSettings">Weight/Volume Settings</a>
-          <a class="col m5 waves-effect waves-light blue lighten-2 btn modal-trigger right hide-on-small-only" data-target="tips">Helpful Tips</a>
+      <div v-show="!printable" class="heading">
+        <h1>Vaper.ninja DIY Calculator</h1>
+        <p class="subHeading">
+          <strong>A DIY E-Liquid calculator that includes weight (in grams), and doesn't omit any details in its calculations.</strong><br />
+          I found other calculators to be either inaccurate, less than user-friendly, clunky, hard to understand,
+          lacking weight or weight configurations, only ran on a specific platform that I don't use, or many of the above.
+          So I built an e-juice calculator that tries to be everything that the others aren't and above all, highly accurate.
+          <br />
+          <a class="modal-trigger" href="#license">
+            License: MIT<br >
+            By using this app you are accepting the license agreement.
+          </a>
+        </p>
+        <div class="row about-donate">
+          <a class="col s12 m5 waves-effect waves-light blue lighten-2 btn modal-trigger" data-target="about">About</a>
+          <div class="col s12 m2"></div>
+          <a class="col s12 m5 waves-effect waves-light blue lighten-2 btn modal-trigger right" data-target="donate">Donate / Contact</a>
+        </div>
+        <!-- Settings Trigger -->
+        <div class="row">
+            <a class="col s12 m5 waves-effect waves-light btn modal-trigger" data-target="baseSettings">Weight/Volume Settings</a>
+            <a class="col m5 waves-effect waves-light blue lighten-2 btn modal-trigger right hide-on-small-only" data-target="tips">Helpful Tips</a>
+        </div>
       </div>
 
       <!-- Settings Modal -->
@@ -219,7 +221,7 @@
 
       <div class="components">
 
-        <div id="base-components" class="row">
+        <div v-show="!printable" id="base-components" class="row">
 
           <div class="row">
             <div class="section-heading">
@@ -280,15 +282,22 @@
 
         </div>
 
+        <div class="readable no-print">
+          <p>
+            <input v-model="printable" type="checkbox" id="readable" />
+            <label for="readable">Readable / Printable</label>
+          </p>
+        </div>
+
 
         <!-- Ingredients -->
         <ul class="collection" id="recipe-totals">
 
           <li v-if="printable" class="collection-item ingredient-header-line">
             <div class="row ingredient-header-line">
-              <div class="col s3"><p class="ing-heading">Bottle Size: {{targetBottleSize}}&nbsp;ML</p></div>
-              <div class="col s3"><p class="ing-heading">VG/PG Ratio: {{targetRatioVg}}/{{targetRatioPg}}</p></div>
-              <div class="col s6"><p class="ing-heading">Target Nicotine: {{targetNicMg}}&nbsp;MG - ({{nicVG}}/{{nicPG}} {{nicBaseMg}}MG Base)</p></div>
+              <div class="col s3"><p class="ing-heading">Bottle Size:<br /> {{targetBottleSize}}&nbsp;ML</p></div>
+              <div class="col s3"><p class="ing-heading">VG/PG Ratio:<br /> {{targetRatioVg}}/{{targetRatioPg}}</p></div>
+              <div class="col s6"><p class="ing-heading">Target Nicotine:<br /> {{targetNicMg}}&nbsp;MG - ({{nicVG}}/{{nicPG}} {{nicBaseMg}}MG Base)</p></div>
            </div>
          </li>
 
@@ -335,7 +344,7 @@
           </li>
         </ul>
 
-        <ul class="collapsible" id="flavors" data-collapsible="accordion">
+        <ul v-show="!printable" class="collapsible" id="flavors" data-collapsible="accordion">
          <li class="header">
            <div class="collapsible-header">
              <div class="row ingredient-header-line">
@@ -401,7 +410,7 @@
 
        </ul>
 
-      <div class="row">
+      <div v-show="!printable" class="row">
         <div class="col m4 s6">
           <a class="waves-effect waves-light btn" id="addFlavor" @click="addFlavor">Add Flavor</a>
         </div>

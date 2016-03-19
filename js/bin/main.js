@@ -11,7 +11,7 @@ var calculate = {
 
 var vm, $list;
 
-Vue.config.debug = true;
+// Vue.config.debug = true;
 
 Vue.filter('percent_to_ml', function (percentage) {
   return this.targetBottleSize * ( parseFloat(percentage) / 100 );

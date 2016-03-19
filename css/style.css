@@ -8529,6 +8529,8 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .ingredient-header-line {
   margin: 0; }
+  .ingredient-header-line .ing-heading {
+    line-height: 1.5em; }
 
 .ingredient-line {
   margin: 0; }
@@ -8569,14 +8571,6 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 #donate input:disabled {
   color: #000; }
 
-body.print-mode #wrapper > h1,
-body.print-mode #wrapper .subHeading,
-body.print-mode #wrapper > a.btn,
-body.print-mode #wrapper > a.btn-large {
-  display: none; }
-
-body.print-mode .components > * {
-  display: none; }
-
-body.print-mode #recipe-totals {
-  display: block; }
+@media print {
+  .no-print, .no-print * {
+    display: none !important; } }
