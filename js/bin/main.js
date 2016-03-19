@@ -93,7 +93,10 @@ var settingsDefaults = {
       vgWeight: 1.261,
       pgWeight: 1.036
     }
-  }
+  },
+
+  printableFontSize: 14,
+
 };
 
 //Fetch the settings object. If it's empty, assign an empty object
@@ -124,6 +127,9 @@ vm = new Vue({
         }
         this.vgWeight = this.weightOptions[val].vgWeight;
         this.pgWeight = this.weightOptions[val].pgWeight;
+      },
+      printableFontSize: function (val, oldVal) {
+        $(".print-mode #recipe-totals").css('font-size', val + "px");
       }
     },
 
@@ -211,6 +217,16 @@ vm = new Vue({
       }
     },
     methods: {
+
+      fontSizeChange: function(direction) {
+        if(direction == "up") {
+          if(this.printableFontSize > 24) return;
+          this.printableFontSize += 1;
+        } else {
+          if(this.printableFontSize < 8) return;
+          this.printableFontSize -= 1;
+        }
+      },
 
       weightSetCustom: function() {
         this.weightSource = 'custom';

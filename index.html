@@ -30,6 +30,10 @@
             License: MIT<br >
             By using this app you are accepting the license agreement.
           </a>
+          <br />
+          <div class="updates">
+            <a class="modal-trigger" href="#updates">Recent Updates</a> <em>3/19/2016 - v1.1</em>
+          </div>
         </p>
         <div class="row about-donate">
           <a class="col s12 m5 waves-effect waves-light blue lighten-2 btn modal-trigger" data-target="about">About</a>
@@ -218,6 +222,28 @@
         </div>
       </div>
 
+      <div id="updates" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <ul class="collection">
+            <li class="collection-item">
+              <div class="row">
+                <div class="col s12 m4"><em>v1.1 - 3/19/2016</em></div>
+                <div class="col s12 m8">Printable/Readable mode <br />Ajdustable font size in reader mode</div>
+              </div>
+            </li>
+            <li class="collection-item">
+              <div class="row">
+                <div class="col s12 m4"><em>v1 - 3/18/2016</em></div>
+                <div class="col s12 m8">Released</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn">Ok</a>
+        </div>
+      </div>
+
 
       <div class="components">
 
@@ -282,11 +308,27 @@
 
         </div>
 
-        <div class="readable no-print">
-          <p>
-            <input v-model="printable" type="checkbox" id="readable" />
-            <label for="readable">Readable / Printable</label>
-          </p>
+        <div class="readable no-print row">
+          <div class="col s12 m6">
+            <p>
+              <input v-model="printable" type="checkbox" id="readable" />
+              <label for="readable">Readable / Printable</label>
+            </p>
+          </div>
+          <div v-show="printable" class="col s6 m3">
+            <div class="input-field">
+              <input v-model="printableFontSize" type="number" id="printableFontSize" min="5" max="30" disabled number>
+              <label for="printableFontSize">Font Size</label>
+            </div>
+          </div>
+          <div v-show="printable" class="col s6 m3">
+            <a class="btn-floating btn-small waves-effect waves-light valign" @click="fontSizeChange('down')">
+              <i class="material-icons">remove</i>
+            </a>
+            <a class="btn-floating btn-small waves-effect waves-light valign" @click="fontSizeChange('up')">
+              <i class="material-icons">add</i>
+            </a>
+          </div>
         </div>
 
 

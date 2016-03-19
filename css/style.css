@@ -8524,6 +8524,9 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   .picker--time .picker__box {
     margin-bottom: 5em; } }
 
+#updates .row {
+  margin: 0; }
+
 .components {
   margin-top: 30px; }
 
@@ -8570,6 +8573,10 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 #donate input:disabled {
   color: #000; }
+
+@media only screen and (max-width: 600px) {
+  #updates .m4 {
+    margin-bottom: 10px; } }
 
 @media print {
   .no-print, .no-print * {
