@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DIY e-Juice Calculator w/weight - Vaper.ninja</title>
+    <meta name="description" content="A DIY E-Liquid calculator that includes weight (in grams), and doesn't omit any details in its calculations.">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="./css/style.css?v3"  media="all"/>
+
+    <!--Let browser know website is optimized for mobilsave pre-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="keywords" content="DIY,eliquid,calculator,weight,grams,ml,ejuice,vaping,scale">
+
+  </head>
+
+  <body>
+
+    <div class="container" id="wrapper">
+      <div v-show="!printable" class="heading">
+        <h1>Vaper.ninja DIY Calculator</h1>
+        <p class="subHeading">
+          <strong>A DIY E-Liquid calculator that includes weight (in grams), and doesn't omit any details in its calculations.</strong><br />
+          I found other calculators to be either inaccurate, less than user-friendly, clunky, hard to understand,
+          lacking weight or weight configurations, only ran on a specific platform that I don't use, or many of the above.
+          So I built an e-juice calculator that tries to be everything that the others aren't and above all, highly accurate.
+          <br />
+          <a class="modal-trigger" href="#license">
+            License: MIT<br >
+            By using this app you are accepting the license agreement.
+          </a>
+          <br />
+          <div class="updates">
+            <a class="modal-trigger" href="#updates">Recent Updates</a> <em>3/19/2016 - v1.1</em>
+          </div>
+        </p>
+        <div class="row about-donate">
+          <a class="col s12 m5 waves-effect waves-light blue lighten-2 btn modal-trigger" data-target="about">About</a>
+          <div class="col s12 m2"></div>
+          <a class="col s12 m5 waves-effect waves-light blue lighten-2 btn modal-trigger right" data-target="donate">Donate / Contact</a>
+        </div>
+        <!-- Settings Trigger -->
+        <div class="row">
+            <a class="col s12 m5 waves-effect waves-light btn modal-trigger" data-target="baseSettings">Weight/Volume Settings</a>
+            <a class="col m5 waves-effect waves-light blue lighten-2 btn modal-trigger right hide-on-small-only" data-target="tips">Helpful Tips</a>
+        </div>
+      </div>
+
+      <!-- Settings Modal -->
+      <div id="baseSettings" class="modal modal-fixed-footer bottom-sheet">
+        <div class="modal-content">
+          <h3>Drops</h3>
+          <div class="row">
+            <div class="col s6">
+              <div class="input-field">
+                <input v-model="dropsPerMl" id="drops_per_ml" type="number" min="1" number>
+                <label for="drops_per_ml">Drops per ML</label>
+              </div>
+            </div>
+          </div>
+
+          <h3>General Weight</h3><p>Scroll down for presets/descriptions</p>
+          <div class="row">
+            <div class="col s6">
+              <div class="input-field">
+                <input v-model="vgWeight" v-on:change.self="weightSetCustom" id="vg_weight" type="number" min="1" number>
+                <label for="vg_weight">VG (Grams/ML)</label>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="input-field">
+                <input v-model="pgWeight" v-on:change.self="weightSetCustom" id="pg_weight" type="number" min="1" number>
+                <label for="pg_weight">PG (Grams/ML)</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 m6">
+              <label>Weight Source</label>
+              <select v-model="weightSource" class="browser-default">
+                <option v-for="(key, option) in weightOptions" value="{{key}}">
+                  {{option.title}}
+                </option>
+                <option value="custom" disabled>Custom (Automatic Switch)</option>
+              </select>
+            </div>
+            <div class="col s6"></div>
+          </div>
+          <div class="row">
+            <ul class="collection">
+              <li v-for="(key,weight) in weightOptions" class="weight-options collection-item">
+                {{weight.title}}:<br /> {{weight.details}}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn">Ok</a>
+        </div>
+      </div>
+
+      <!-- // Settings Modal -->
+
+      <!-- Donate Modal -->
+      <div id="donate" class="modal">
+        <div class="modal-content">
+          <div class="row">
+            <ul class="collection">
+              <li class="collection-item">
+                <div class="valign-wrapper">
+                  <div class="col s12 m3 valign">
+                    Bitcoin:
+                  </div>
+                  <div class="col s12 m9">
+                    <a href="bitcoin:1AupyA7523BAcqaytmFDwyLVtcRFKcty4d">1AupyA7523BAcqaytmFDwyLVtcRFKcty4d</a>
+                  </div>
+                </div>
+              </li>
+              <li class="collection-item">
+                <div class="valign-wrapper">
+                  <div class="col m3">
+                    Square Cash:
+                  </div>
+                  <div class="col m9">
+                      <a target="_blank" href="https://cash.me/$luke3butler">$luke3butler</a>
+                  </div>
+                </div>
+              </li>
+              <li class="collection-item">
+                <div class="valign-wrapper">
+                  <div class="col s12">
+                    If you'd like to contact me, shoot me a PM on reddit.
+                    <a target="_blank" href="https://www.reddit.com/user/DevStrokes">/u/DevStrokes</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn">Ok</a>
+        </div>
+      </div>
+      <!-- // Donate Modal -->
+
+      <!-- About Modal -->
+      <div id="about" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <div class="row">
+            <h3>About</h3>
+            <p>
+              I needed a calculator on OSX that included mixing by weight, and couldn't find anything so I wrote this.
+              <br /><br />
+              A lot goes into the calculations of mixing e-juice and I noticed how certain calculators didn't do the math right,
+              calculated certain things backwards, or just didn't include certain variables in the totals. All calculations have been verified multiple times, but if you think that a calculation might be faulty be sure to let me know!<br /><br />
+              The calculations can be viewed in the javascript source, but I'll also summarize it here when I get the time to write them out in non-js.
+              <br />
+            </p>
+          </div>
+          <div class="row">
+            <ul class="collection with-header">
+              <li class="collection-header">
+                <h3>Road Map </h3>
+                Work that goes into these features is subject to availablity and feedback.<br >
+                Updated 3/18/2016
+              </li>
+              <li class="collection-item">Native Apps (OSX, Linux, Windows) - Started</li>
+              <li class="collection-item">Saved Recipes - Started</li>
+              <li class="collection-item">Saved Settings - Started</li>
+              <li class="collection-item">Import/Export - Started</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn">Ok</a>
+        </div>
+      </div>
+      <!-- // About Modal -->
+
+      <div id="license" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          The MIT License (MIT)<br />
+          <br />
+          Copyright (c) 2016 Luke Butler
+          <br /><br />
+          Permission is hereby granted, free of charge, to any person obtaining a copy
+          of this software and associated documentation files (the "Software"), to deal
+          in the Software without restriction, including without limitation the rights
+          to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+          copies of the Software, and to permit persons to whom the Software is
+          furnished to do so, subject to the following conditions:
+          <br /><br />
+          The above copyright notice and this permission notice shall be included in all
+          copies or substantial portions of the Software.
+          <br /><br />
+          THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+          IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+          FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+          AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+          LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+          OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+          SOFTWARE.
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn">Ok</a>
+        </div>
+      </div>
+
+      <div id="tips" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <ul class="collection">
+            <li class="collection-item">After clicking a number input you can user the UP and DOWN keys to change the value in increments of 1.</li>
+            <li class="collection-item">Adjust your weights to get more accurate weight measurements.</li>
+            <li class="collection-item">If one of the ingredients has a negative amount, then you probably need to adjust the target VG/PG ratio. A feature might be added to adjust this automatically.</li>
+            <li class="collection-item">Almost everything is as automatic, and things should get even more automatic as time goes on.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn">Ok</a>
+        </div>
+      </div>
+
+      <div id="updates" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <ul class="collection">
+            <li class="collection-item">
+              <div class="row">
+                <div class="col s12 m4"><em>v1.1 - 3/19/2016</em></div>
+                <div class="col s12 m8">Printable/Readable mode <br />Ajdustable font size in reader mode</div>
+              </div>
+            </li>
+            <li class="collection-item">
+              <div class="row">
+                <div class="col s12 m4"><em>v1 - 3/18/2016</em></div>
+                <div class="col s12 m8">Released</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn">Ok</a>
+        </div>
+      </div>
+
+
+      <div class="components">
+
+        <div v-show="!printable" id="base-components" class="row">
+
+          <div class="row">
+            <div class="section-heading">
+              <h3 class="center-align">Nicotine Base</h3>
+            </div>
+            <div class="col s12 m4">
+              <div class="input-field">
+                <input v-model="nicBaseMg" id="nicBaseMg" type="number" min="0" class="validate" number>
+                <label for="nicBaseMg">Nicotine MG/ML</label>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="input-field">
+                <input v-model="nicVG" id="nicBaseVg" @change="changeNicRatio('VG')" type="number" min="0" max="100" class="validate" number>
+                <label for="nicBaseVg">VG ratio %</label>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="input-field">
+                <input v-model="nicPG" id="nicBasePg" @change="changeNicRatio('PG')" type="number" min="0" max="100" class="validate" number>
+                <label for="nicBasePg">PG ratio %</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="section-heading">
+              <h3 class="center-align">Target Measurements</h3>
+            </div>
+            <div class="col s6">
+              <div class="input-field">
+                <input id="bottle_ml" type="number" min="1" v-model="targetBottleSize" class="validate" number>
+                <label for="bottle_ml">Bottle Size (ML)</label>
+              </div>
+            </div>
+
+            <div class="col s6">
+              <div class="input-field">
+                <input v-model="targetNicMg" id="nic_mgml" type="number" min="0" max="{{nicBaseMg}}" class="" number>
+                <label for="nic_mgml">Nicotine (mg/ml)</label>
+              </div>
+            </div>
+
+            <div class="col s6">
+              <div class="input-field">
+                <input v-model="targetRatioVg" id="vg_ratio" type="number" min="0" @change="changeVgPg" max="100" class="vgpgratio validate" number>
+                <label for="vg_ratio">VG Ratio (%)</label>
+              </div>
+            </div>
+
+            <div class="col s6">
+              <div class="input-field">
+                <input v-model="targetRatioPg" id="pg_ratio" type="number" min="0" @change="changeVgPg" max="100" class="vgpgratio validate" number>
+                <label for="pg_ratio">PG Ratio (%)</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="readable no-print row">
+          <div class="col s12 m6">
+            <p>
+              Readable / Printable
+              <div class="switch">
+               <label>
+                 Off
+                 <input v-model="printable" type="checkbox">
+                 <span class="lever"></span>
+                 On
+               </label>
+             </div>
+            </p>
+          </div>
+          <div v-show="printable" class="col s6 m3">
+            <div class="input-field">
+              <input v-model="printableFontSize" type="number" id="printableFontSize" min="5" max="30" disabled number>
+              <label for="printableFontSize">Font Size</label>
+            </div>
+          </div>
+          <div v-show="printable" class="col s6 m3">
+            <a class="btn-floating btn-small waves-effect waves-light valign" @click="fontSizeChange('down')">
+              <i class="material-icons">remove</i>
+            </a>
+            <a class="btn-floating btn-small waves-effect waves-light valign" @click="fontSizeChange('up')">
+              <i class="material-icons">add</i>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- Ingredients -->
+        <ul class="collection" id="recipe-totals">
+
+          <li v-if="printable" class="collection-item ingredient-header-line">
+            <div class="row ingredient-header-line">
+              <div class="col s3"><p class="ing-heading">Bottle Size:<br /> {{targetBottleSize}}&nbsp;ML</p></div>
+              <div class="col s3"><p class="ing-heading">VG/PG Ratio:<br /> {{targetRatioVg}}/{{targetRatioPg}}</p></div>
+              <div class="col s6"><p class="ing-heading">Target Nicotine:<br /> {{targetNicMg}}&nbsp;MG - <br class="hide-on-med-and-up" /> ({{nicVG}}/{{nicPG}} {{nicBaseMg}}MG Base)</p></div>
+           </div>
+         </li>
+
+          <li class="collection-item ingredient-header-line">
+            <div class="row ingredient-header-line">
+              <div class="col s3"><p class="ing-heading">Ingredient</p></div>
+              <div class="col s3"><p class="ing-heading">drops</p></div>
+              <div class="col s3"><p class="ing-heading">milliliters</p></div>
+              <div class="col s3"><p class="ing-heading">grams</p></div>
+           </div>
+         </li>
+          <li class="collection-item" id="vg_line">
+            <div class="row ingredient-line">
+              <div class="col s3"><p class="name-val">VG</p></div>
+              <div class="col s3"><p class="name-val drops">{{leftoverVgMl | ml_to_drops | roundl 0}}</p></div>
+              <div class="col s3"><p class="name-val ml">{{leftoverVgMl | roundl}}</p></div>
+              <div class="col s3"><p class="name-val grams">{{leftoverVgMl | ml_to_grams 'VG' | roundl}}</p></div>
+            </div>
+          </li>
+          <li class="collection-item" id="pg_line">
+            <div class="row ingredient-line">
+              <div class="col s3"><p class="name-val">PG</p></div>
+              <div class="col s3"><p class="name-val drops">{{leftoverPgMl | ml_to_drops | roundl 0}}</p></div>
+              <div class="col s3"><p class="name-val ml">{{leftoverPgMl | roundl}}</p></div>
+              <div class="col s3"><p class="name-val grams">{{leftoverPgMl | ml_to_grams 'PG' | roundl}}</p></div>
+            </div>
+          </li>
+          <li class="collection-item" id="nic_line">
+            <div class="row ingredient-line">
+              <div class="col s3"><p class="name-val">Nicotine</p></div>
+              <div class="col s3"><p class="name-val drops">{{ nicPercentage | percent_to_ml | ml_to_drops | roundl 0 }}</p></div>
+              <div class="col s3"><p class="name-val ml">{{ nicPercentage | percent_to_ml | roundl }}</p></div>
+              <div class="col s3"><p class="name-val grams">{{ nicPercentage | percent_to_ml | ml_to_grams "NIC" | roundl }}</p></div>
+            </div>
+          </li>
+
+          <li v-if="printable" v-for="flavor in flavors" class="collection-item">
+            <div class="row ingredient-line">
+              <div class="col s3"><p class="name-val">{{flavor.name}} - {{flavor.percentage | roundl 4 }}%</p></div>
+              <div class="col s3"><p class="name-val drops">{{ flavor.percentage | percent_to_ml | ml_to_drops | roundl 0 }}</p></div>
+              <div class="col s3"><p class="name-val ml">{{ flavor.percentage | percent_to_ml | roundl }}</p></div>
+              <div class="col s3"><p class="name-val grams">{{ flavor.percentage | percent_to_ml | ml_to_grams flavor.weight_src flavor.custom_weight | roundl }}</p></div>
+            </div>
+          </li>
+        </ul>
+
+        <ul v-show="!printable" class="collapsible" id="flavors" data-collapsible="accordion">
+         <li class="header">
+           <div class="collapsible-header">
+             <div class="row ingredient-header-line">
+               <div class="col s3"><p class="ing-heading">Flavor Name</p></div>
+               <div class="col s3"><p class="ing-heading">drops</p></div>
+               <div class="col s3"><p class="ing-heading">milliliters</p></div>
+               <div class="col s3"><p class="ing-heading">grams</p></div>
+             </div>
+           </div>
+         </li>
+
+       <!-- v-loop start -->
+
+         <li v-for="flavor in flavors" class="flavor_line">
+           <div class="collapsible-header">
+             <div class="row ingredient-line">
+               <div class="col s3 name"><p class="name-val">{{flavor.name}} - {{flavor.percentage | roundl 4 }}%</p></div>
+               <div class="col s3 drops">{{ flavor.percentage | percent_to_ml | ml_to_drops | roundl 0 }}</div>
+               <div class="col s3 ml">{{ flavor.percentage | percent_to_ml | roundl }}</div>
+               <!-- <div class="col s3 grams">{{ ml_to_mg( percent_to_ml(flavor.percentage), flavor.weight_src, flavor.custom_weight ) }}</div> -->
+               <div class="col s3 grams">
+                 {{ flavor.percentage | percent_to_ml | ml_to_grams flavor.weight_src flavor.custom_weight | roundl }}
+                 <i class="material-icons closed right hide-on-small-only">settings</i>
+                 <i class="material-icons open right">visibility</i>
+               </div>
+             </div>
+           </div>
+           <div class="collapsible-body">
+            <div class="ingredient-body row">
+              <div class="col s12">
+              <div class="input-field col s12 m4">
+                <input id="flavor-{{flavor.id}}" v-model="flavor.name" type="text" class="validate">
+                <label for="flavor-{{flavor.id}}" class="active">Flavor Name</label>
+              </div>
+
+              <div class="input-field col s12 m4">
+                <input id="flavor-percent-{{flavor.id}}" v-model="flavor.percentage" type="number" min ="0" class="" number>
+                <label for="flavor-percent-{{flavor.id}}" class="active">Percentage</label>
+              </div>
+
+              <div class="input-field col s12 m4">
+                <select v-model="flavor.weight_src" class="browser-default">
+                  <option value="PG">PG Weight</option>
+                  <option value="VG">VG Weight</option>
+                  <option value="c">Custom</option>
+                </select>
+                <!-- <label>Weight</label> -->
+              </div>
+
+              <div class="input-field col s12 m6" v-show="flavor.weight_src === 'c'">
+                <input id="flavor-weight-{{flavor.id}}" v-model="flavor.custom_weight" type="number" min="0" class="" number>
+                <label for="flavor-weight-{{flavor.id}}" class="active">Custom Weight (Grams per ML)</label>
+              </div>
+
+              <div class="col s12">
+                <a class="waves-effect waves-light btn" @click="removeFlavor(flavor.id)">Delete</a>
+                <a class="waves-effect waves-light btn flavor-close right">Close</a>
+              </div>
+            </div>
+             </div>
+            </div>
+         </li>
+
+       </ul>
+
+      <div v-show="!printable" class="row">
+        <div class="col m4 s6">
+          <a class="waves-effect waves-light btn" id="addFlavor" @click="addFlavor">Add Flavor</a>
+        </div>
+      </div>
+
+       <!-- // Ingredients -->
+
+      </div>
+    </div>
+
+
+    <!--Import jQuery before materialize.js-->
+    <!-- <script type="text/javascript" src="js/bin/lodash.min.js"></script> -->
+    <!-- <script>window._ = require('./js/bin/lodash.min.js');</script> -->
+    <script>window.Hammer = require('./js/bin/hammer.min.js');</script>
+    <script type="text/javascript" src="js/bin/vue.min.js"></script>
+    <script>window.$ = window.jQuery = require('./js/bin/jquery-2.2.2.min.js');</script>
+    <script type="text/javascript" src="js/bin/materialize.min.js"></script>
+    <!-- <script>require('./js/bin/materialize.min.js');</script> -->
+    <!-- <script type="text/javascript" src="js/bin/main.js"></script> -->
+    <script>require('./js/bin/main.js');</script>
+  </body>
+</html>
