@@ -1,0 +1,19 @@
+{
+  "name": "E-Juice_Calculator",
+  "description": "DIY eliquid calculator",
+  "dependencies": {
+    "lodash": "^4.5.1"
+  },
+  "scripts": {
+    "start": "npm run build",
+    "build": "node-sass -o ./css ./sass/style.scss",
+    "watch": "node-sass -w -o ./css ./sass/style.scss"
+  },
+  "license": "",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-cssmin": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}

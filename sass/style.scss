@@ -1,0 +1,93 @@
+@import "materialize";
+
+$shaded-row: #F8F8F8;
+
+
+#updates .row {
+  margin: 0;
+}
+
+.components {
+  margin-top: 30px;
+}
+
+.ingredient-header-line {
+  margin: 0;
+  .ing-heading {
+    line-height: 1.5em;
+  }
+}
+
+.ingredient-line{
+  margin: 0;
+  & > div > p {
+    line-height: 1;
+  }
+}
+
+#recipe-totals {
+  .collection-item:not(.ingredient-header-line):nth-child(odd) {
+    background: $shaded-row;
+  }
+}
+
+.flavor_line {
+  &.active .ingredient-line {
+    .closed { display: none; }
+    .open   { display: block; }
+  }
+  .ingredient-line .open {
+    display: none;
+  }
+
+  &:nth-child(odd) {
+    .collapsible-header,
+    .collapsible-body {
+      background: $shaded-row;
+    }
+  }
+}
+
+.ing-heading {
+  // font-size: 10px;
+  line-height: 1em;
+}
+
+.ingredient-body {
+  display: inline-block;
+  margin: 0!important;
+  width: 100%;
+
+  .input-field {
+    padding: 5px;
+  }
+  .custom-weight {
+    display: none;
+  }
+}
+
+.about-donate {
+  .btn {
+    margin: 10px 0 10px 0;
+  }
+}
+
+#donate {
+  input:disabled {
+    color: #000;
+  }
+}
+
+.print-mode #recipe-totals {
+
+}
+
+@media #{$small-and-down} {
+  #updates .m4 {
+    margin-bottom: 10px;
+  }
+}
+
+@media print {
+    .no-print, .no-print * { display: none !important; }
+}
